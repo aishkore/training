@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.List;
+import java.util.Optional;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
@@ -9,34 +10,56 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
-public class CourseController {
+@RequestMapping("/courses")
+public class CourseController 
+{
 	@Autowired
-	private Coursecalling cour;
+	private CourseRepository repository;
 
 
-	@RequestMapping(method=RequestMethod.GET,value="/course")
-	public List<Course> get()
+	@RequestMapping(method=RequestMethod.GET)
+	public Course save(@RequestBody Course newCourse)
 	{
-	  return (Arrays.asList(new Course("1","Java","Abc"),new Course("2","Design Patterns","Abc"),new Course("3","Android","Abc")));
+		 return repository.save(newCourse);
+	 
 	}
-	@RequestMapping(method=RequestMethod.POST,value="/course")
-	public void add(@RequestBody Course c)
-	{
-		
-	   cour.addcourse(c);
-	   
-	   
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public Iterable<Course> findall() {
+	  return repository.findAll();
 	}
-	@RequestMapping(method=RequestMethod.PUT,value="/course/{id}")
-	public void update(@PathVariable String id, @RequestBody Course upd)
+	
+	@RequestMapping(method=RequestMethod.GET,value="/{id}")
+	public String findbyid(@RequestParam("id")int id)
 	{
-	   cour.update(id,upd);
+	  String result="";
+	  result=repository.findById((long) id).toString();
+	  return result;
 	}
-	@RequestMapping(method=RequestMethod.DELETE,value="/course/{id}")
-	public void delete(@PathVariable String id)
+	
+	@RequestMapping(method=RequestMethod.GET,value="/findbyname")
+	public String findbyname(@RequestParam("name")String name)
 	{
-		cour.delete(id);
+	  String result="";
+	  result=repository.findByname(name).toString();
+	  return result;
+	}
+
+	@RequestMapping(method=RequestMethod.PUT,value="/update/{id}")
+	public void update(@PathVariable long id, @RequestBody Course upd)
+	{
+	  /* Optional <Course> cour=repository.findById(id);
+	   cour.setname(upd.getName);
+	   cour.setcontent(upd.getContent);*/
+	   repository.save(upd);
+	}
+	@RequestMapping(method=RequestMethod.DELETE,value="/delete/{id}")
+	public void delete(@PathVariable("id")long id)
+	{
+		repository.deleteById(id);
 	}
 }

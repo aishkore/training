@@ -3,7 +3,7 @@ buildscript {
 		springBootVersion = '2.0.3.RELEASE'
 	}
 	repositories {
-		mavenCentral()
+		mavenCentral()//copy
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -25,7 +25,14 @@ repositories {
 
 
 dependencies {
+compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.springframework.boot:spring-boot-starter-web-service')
+	compile('org.springframework.boot:spring-boot-spring-plugin-core')
+	compile('org.springframework.boot:spring-boot-spring-plugin-hateoas')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	runtime('postgresql:postgresql:42.1.1')
 }

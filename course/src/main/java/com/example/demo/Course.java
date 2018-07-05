@@ -1,30 +1,55 @@
 package com.example.demo;
 
-import java.awt.List;
 
-public class Course {
+import javax.persistence.*;
+
+@Entity
+@Table(name="courses")
+public class Course  { 
+
+   @Id
+   @GeneratedValue(strategy=GenerationType.AUTO)
+   private long id;
     
-    private final String id;
-    private final String CourseName;
-    private final String CourseContent;
+	@Column(name="name")
+	private  String name;
+    
+	@Column(name="content")
+	 private  String content;
 
-   
-    public String getId() {
-        return id;
-    }
+	public Object getName;
+
+	public Object getContent;
+    
 	
-    public String getName() {
-        return CourseName;
-    }
-
-    public String getContent() {
-        return CourseContent;
-    }
-
-    public Course(String id,String CourseName,String CourseContent) {
+    public Course(long id,String name,String content) {
         this.id = id;
-	this.CourseName=CourseName;
-        this.CourseContent = CourseContent;
+	this.name=name;
+        this.content = content;
     }
     
+   /* public String toString()
+    {
+    	return String.format("Customer[id=%d,name=%s,content=%s",id,name,content);
+    }
+*/
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+
+	public long getId() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+	public void setname(String name)
+	{
+		 this.name=name;
+	}
+	public void setcontent(String content)
+	{
+		 this.content=content;
+	}
+	
 }
+
